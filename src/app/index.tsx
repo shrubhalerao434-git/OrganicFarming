@@ -1,98 +1,134 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
-
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
-  return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 export default function HomeScreen() {
   return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.logo}>🌱 OrganicFarming</Text>
+        <Text style={styles.subtitle}>
+          Farm & Inventory Management
+        </Text>
+      </View>
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      <Text style={styles.heading}>Dashboard</Text>
+      <Text style={styles.description}>
+        Welcome back! Here is your farm overview.
+      </Text>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+      <View style={styles.cardContainer}>
+        <View style={styles.card}>
+          <Text style={styles.cardIcon}>📦</Text>
+          <Text style={styles.cardTitle}>Total Products</Text>
+          <Text style={styles.cardValue}>120</Text>
+        </View>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        <View style={styles.card}>
+          <Text style={styles.cardIcon}>🌾</Text>
+          <Text style={styles.cardTitle}>Active Crops</Text>
+          <Text style={styles.cardValue}>18</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardIcon}>🛒</Text>
+          <Text style={styles.cardTitle}>Orders</Text>
+          <Text style={styles.cardValue}>32</Text>
+        </View>
+
+        <View style={styles.card}>
+          <Text style={styles.cardIcon}>⚠️</Text>
+          <Text style={styles.cardTitle}>Low Stock</Text>
+          <Text style={styles.cardValue}>5</Text>
+        </View>
+      </View>
+
+      <View style={styles.section}>
+        <Text style={styles.sectionTitle}>Quick Overview</Text>
+        <Text style={styles.item}>🌱  Farm & Crop Management</Text>
+        <Text style={styles.item}>📦  Product Inventory</Text>
+        <Text style={styles.item}>🛒  Orders & Sales</Text>
+        <Text style={styles.item}>📊  Reports & Analytics</Text>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
+    backgroundColor: '#F4F8F1',
+  },
+  header: {
+    backgroundColor: '#176B3A',
+    padding: 28,
+    paddingTop: 50,
+    borderBottomLeftRadius: 24,
+    borderBottomRightRadius: 24,
+  },
+  logo: {
+    color: '#FFFFFF',
+    fontSize: 25,
+    fontWeight: 'bold',
+  },
+  subtitle: {
+    color: '#D9F0DF',
+    marginTop: 8,
+    fontSize: 14,
+  },
+  heading: {
+    fontSize: 26,
+    fontWeight: 'bold',
+    color: '#183D27',
+    margin: 20,
+  },
+  description: {
+    color: '#687568',
+    marginHorizontal: 20,
+    marginTop: -12,
+    marginBottom: 20,
+  },
+  cardContainer: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
+    paddingHorizontal: 12,
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  card: {
+    backgroundColor: '#FFFFFF',
+    width: '46%',
+    margin: '2%',
+    padding: 18,
+    borderRadius: 16,
+    elevation: 2,
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  cardIcon: {
+    fontSize: 26,
   },
-  title: {
-    textAlign: 'center',
+  cardTitle: {
+    color: '#687568',
+    fontSize: 13,
+    marginTop: 12,
   },
-  code: {
-    textTransform: 'uppercase',
+  cardValue: {
+    color: '#176B3A',
+    fontSize: 27,
+    fontWeight: 'bold',
+    marginTop: 6,
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  section: {
+    backgroundColor: '#FFFFFF',
+    margin: 20,
+    padding: 20,
+    borderRadius: 16,
+  },
+  sectionTitle: {
+    fontSize: 19,
+    fontWeight: 'bold',
+    color: '#183D27',
+    marginBottom: 16,
+  },
+  item: {
+    fontSize: 15,
+    color: '#405345',
+    paddingVertical: 12,
   },
 });
