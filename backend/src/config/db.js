@@ -1,6 +1,7 @@
 
+const path = require("path");
 const { Pool } = require("pg");
-require("dotenv").config();
+require("dotenv").config({ path: path.resolve(__dirname, "../../.env") });
 
 const pool = new Pool({
   host: process.env.DB_HOST,
@@ -12,6 +13,13 @@ const pool = new Pool({
 
 pool.on("error", (err) => {
   console.error("Unexpected PostgreSQL error:", err.message);
+});
+
+// Test connection on startup
+pool.query("SELECT 1").then(() => {
+  console.log("✅ PostgreSQL connected successfully");
+}).catch((err) => {
+  console.error("❌ PostgreSQL connection failed:", err.message);
 });
 
 module.exports = pool;
