@@ -1,7 +1,9 @@
-
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
+
+const productsRouter = require("./routes/products");
+const categoriesRouter = require("./routes/categories");
 
 const pool = require("./config/db");
 
@@ -9,6 +11,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/products", productsRouter);
+app.use("/api/categories", categoriesRouter);
 
 app.get("/", (req, res) => {
   res.json({ message: "OrganicFarming API is running!" });
